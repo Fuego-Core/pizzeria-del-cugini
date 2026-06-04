@@ -3,3 +3,13 @@ crop-*
 *.ps1
 .DS_Store
 Thumbs.db
+# fichiers de travail (captures de vérif, téléchargements bruts)
+_dl/
+_dl_pasta/
+_dl_dessert/
+t-*.html
+card-*.png
+menu-*.png
+sheet*.png
+onerr.png
+tablet.png

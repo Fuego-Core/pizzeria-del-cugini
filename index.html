@@ -228,29 +228,42 @@
   .menu-note .price-key i{font-style:normal;color:var(--green)}
   .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;transition:opacity .25s var(--ease),transform .25s var(--ease)}
   .menu-grid.fade{opacity:0;transform:translateY(14px)}
-  .item{background:var(--paper);border-radius:18px;padding:24px;border:1px solid rgba(36,26,18,.08);position:relative;overflow:hidden;transition:transform .4s var(--ease),box-shadow .4s,border-color .4s}
-  .item::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--red);transform:scaleY(0);transform-origin:top;transition:transform .4s var(--ease)}
-  .item:hover{box-shadow:0 28px 50px -26px var(--shadow-md);border-color:rgba(28,110,63,.3)}
-  .item:hover::before{transform:scaleY(1)}
-  .item .top{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
-  .item h3{font-family:'Fraunces',serif;font-size:1.32rem;font-weight:600;color:var(--green-deep)}
-  .item .badge{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#fff;background:linear-gradient(120deg,var(--gold),#b07f2e);padding:4px 10px;border-radius:999px;align-self:center;white-space:nowrap}
-  .item .ing{color:var(--ink-soft);font-size:.92rem;margin:8px 0 16px;min-height:38px}
-  .item .prices{display:flex;gap:10px;flex-wrap:wrap}
-  .item .pp{display:flex;flex-direction:column;background:var(--cream);border-radius:12px;padding:7px 14px;border:1px solid rgba(28,110,63,.12)}
-  .item .pp small{font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);font-weight:700}
-  .item .pp b{font-family:'Fraunces',serif;font-size:1.16rem;color:var(--red)}
-  .item .single{font-family:'Fraunces',serif;font-size:1.3rem;color:var(--red);font-weight:600}
-  .item .thumb{position:absolute;top:16px;right:16px;width:74px;height:74px;border-radius:14px;overflow:hidden;border:2px solid var(--paper);box-shadow:0 10px 22px -8px var(--shadow-md);z-index:1}
-  .item .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
-  .item .thumb.ph-ill{display:grid;place-items:center;background:linear-gradient(145deg,#f4e3c4,#e3b083 52%,#cf935a)}
-  .item .thumb.ph-ill::after{content:"";position:absolute;inset:0;background-image:var(--grain);background-size:120px;opacity:.06;mix-blend-mode:multiply}
-  .item .thumb.ph-ill svg{width:36px;height:36px;color:#fff;opacity:.94;filter:drop-shadow(0 1px 2px rgba(120,70,30,.45))}
-  .item:hover .thumb img{transform:scale(1.14)}
-  .item .thumb.ph-ill svg{transition:transform .6s var(--ease)}
-  .item:hover .thumb.ph-ill svg{transform:scale(1.1) rotate(-4deg)}
-  .item.has-thumb .top{padding-right:90px}
-  .item.has-thumb .ing{padding-right:90px}
+  .menu-grid.compact-grid{grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
+  .item{background:var(--paper);border-radius:20px;border:1px solid rgba(36,26,18,.08);position:relative;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 12px 30px -24px var(--shadow-md);transition:transform .42s var(--ease),box-shadow .42s,border-color .42s}
+  .item:hover{transform:translateY(-6px);box-shadow:0 34px 58px -30px var(--shadow-md);border-color:rgba(28,110,63,.26)}
+  /* média : la photo est l'élément dominant */
+  .item .ph{position:relative;aspect-ratio:3/2;overflow:hidden;background:var(--cream-2)}
+  .item .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1s var(--ease)}
+  .item:hover .ph img{transform:scale(1.07)}
+  .item .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 56%,rgba(21,17,14,.34));pointer-events:none}
+  .item .ph.ph-ill{display:grid;place-items:center;background:linear-gradient(145deg,#f4e3c4,#e3b083 52%,#cf935a)}
+  .item .ph.ph-ill::before{content:"";position:absolute;inset:0;background-image:var(--grain);background-size:160px;opacity:.07;mix-blend-mode:multiply}
+  .item .ph.ph-ill svg{width:52px;height:52px;color:#fff;opacity:.92;filter:drop-shadow(0 2px 4px rgba(120,70,30,.4));position:relative}
+  .item .ph .badge{position:absolute;top:12px;left:12px;z-index:2;font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#fff;background:var(--red);padding:5px 11px;border-radius:999px;box-shadow:0 6px 14px -5px rgba(0,0,0,.5)}
+  /* corps */
+  .item .body{padding:15px 17px 17px;display:flex;flex-direction:column;flex:1}
+  .item h3{font-family:'Fraunces',serif;font-size:1.22rem;font-weight:600;color:var(--green-deep);line-height:1.15}
+  .item .ing{color:var(--ink-soft);font-size:.87rem;line-height:1.45;margin:5px 0 0}
+  .item .foot{margin-top:auto;padding-top:14px;display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+  .item .prices{display:flex;gap:8px;flex-wrap:wrap}
+  .item .pp{display:flex;flex-direction:column;background:var(--cream);border-radius:11px;padding:6px 12px;border:1px solid rgba(28,110,63,.12)}
+  .item .pp small{font-size:.56rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);font-weight:700}
+  .item .pp b{font-family:'Fraunces',serif;font-size:1.06rem;color:var(--red)}
+  .item .single{font-family:'Fraunces',serif;font-size:1.3rem;color:var(--red);font-weight:600;align-self:center}
+  /* bouton commander (action) */
+  .item .order{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:#fff;box-shadow:0 9px 18px -7px rgba(28,110,63,.7);transition:transform .3s var(--ease),background .3s}
+  .item .order svg{width:19px;height:19px}
+  .item .order:hover{transform:scale(1.12) rotate(8deg);background:var(--red)}
+  /* variante compacte (boissons) */
+  .item.compact{flex-direction:row;align-items:center;gap:13px;padding:13px 15px}
+  .item.compact .ci{flex:none;width:46px;height:46px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(150deg,var(--green),var(--green-deep));color:#fff}
+  .item.compact .ci svg{width:22px;height:22px}
+  .item.compact .body{padding:0;flex:1}
+  .item.compact h3{font-size:1.04rem}
+  .item.compact .ing{font-size:.8rem}
+  .item.compact .cprice{flex:none}
+  .item.compact .single{font-size:1.18rem}
+  .item.compact:hover{transform:translateY(-3px)}
   .supp{text-align:center;margin-top:30px;font-size:.95rem;color:var(--ink-soft)}
   .supp b{color:var(--green)}
 
@@ -598,11 +611,11 @@
       <p>Toutes nos pizzas sont à base de pâte fraîche maison.</p>
     </div>
     <div class="tabs" id="tabs">
-      <button class="tab active" data-cat="pizzas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c5 0 9 3 10 6L12 21 2 9c1-3 5-6 10-6z"/><circle cx="10" cy="9" r="1"/><circle cx="13" cy="12" r="1"/></svg>Pizzas</button>
-      <button class="tab" data-cat="pates"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16a8 8 0 0 1-16 0z"/><path d="M7 11V7M10 11V6M13 11V6M16 11V7"/></svg>Pâtes</button>
-      <button class="tab" data-cat="salades"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18a9 9 0 0 1-18 0z"/><path d="M12 11c0-4 3-6 6-6M12 11c-1-3-4-4-7-3"/></svg>Salades</button>
-      <button class="tab" data-cat="desserts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11a4 4 0 1 1 8 0z"/><path d="M9 11l3 10 3-10"/></svg>Desserts</button>
-      <button class="tab" data-cat="boissons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l-1.5 16a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1z"/><path d="M7 8h10"/></svg>Boissons</button>
+      <button class="tab active" data-cat="pizzas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14-1 1"/><path d="m13.75 18.25-1.25 1.42"/><path d="M17.775 5.654a15.68 15.68 0 0 0-12.121 12.12"/><path d="M18.8 9.3a1 1 0 0 0 2.1 7.7"/><path d="M21.964 20.732a1 1 0 0 1-1.232 1.232l-18-5a1 1 0 0 1-.695-1.232A19.68 19.68 0 0 1 15.732 2.037a1 1 0 0 1 1.232.695z"/></svg>Pizzas</button>
+      <button class="tab" data-cat="pates"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"/><path d="M7 21h10"/><path d="M19.5 12 22 6"/><path d="M16.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.73 1.62"/><path d="M11.25 3c.27.1.8.53.74 1.36-.05.83-.92 1.2-.98 2.02-.06.78.33 1.24.72 1.62"/><path d="M6.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.74 1.62"/></svg>Pâtes</button>
+      <button class="tab" data-cat="salades"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21h10"/><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"/><path d="M11.38 12a2.4 2.4 0 0 1-.4-4.77 2.4 2.4 0 0 1 3.2-2.77 2.4 2.4 0 0 1 3.47-.63 2.4 2.4 0 0 1 3.37 3.37 2.4 2.4 0 0 1-1.1 3.7 2.51 2.51 0 0 1 .03 1.1"/><path d="m13 12 4-4"/><path d="M10.9 7.25A3.99 3.99 0 0 0 4 10c0 .73.2 1.41.54 2"/></svg>Salades</button>
+      <button class="tab" data-cat="desserts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m7 11 4.08 10.35a1 1 0 0 0 1.84 0L17 11"/><path d="M17 7A5 5 0 0 0 7 7"/><path d="M17 7a2 2 0 0 1 0 4H7a2 2 0 0 1 0-4"/></svg>Desserts</button>
+      <button class="tab" data-cat="boissons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m6 8 1.75 12.28a2 2 0 0 0 2 1.72h4.54a2 2 0 0 0 2-1.72L18 8"/><path d="M5 8h14"/><path d="M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/><path d="m12 8-1-6h2l-1 6"/></svg>Boissons</button>
     </div>
     <div class="menu-note" id="menuNote"></div>
     <div class="menu-grid" id="menuGrid"></div>
@@ -829,36 +842,92 @@ const DATA = {
      Sans photo, la fiche affiche un placeholder élégant (icône de catégorie). */
   var PHOTOS = {
     pizzas:{
-      "Del Cugini":"image/sig-del-cugini.jpg",
+      "Margherita":"image/menu/pz9.jpg",
+      "Jambon":"image/menu/pz3.jpg",
+      "Chorizo":"image/menu/pz5.jpg",
+      "Thon":"image/menu/pz17.jpg",
+      "Regina":"image/menu/pz8.jpg",
+      "Chèvre":"image/menu/pz20.jpg",
+      "Gorgonzola":"image/menu/pz36.jpg",
+      "Napolitaine":"image/menu/pz49.jpg",
+      "Bolognaise":"image/menu/pz1.jpg",
+      "Végétarienne":"image/menu/pz4.jpg",
+      "Calabraise":"image/menu/pz16.jpg",
+      "Exotic":"image/menu/pz18.jpg",
+      "4 Fromages":"image/menu/pz56.jpg",
+      "Calzone":"image/menu/pz15.jpg",
+      "Fruits de mer":"image/menu/pz11.jpg",
+      "Saumon":"image/menu/pz53.jpg",
+      "Oriental":"image/menu/pz45.jpg",
+      "Burger":"image/menu/pz24.jpg",
+      "4 Saisons":"image/menu/pz22.jpg",
+      "Marco":"image/menu/pz54.jpg",
       "Gargantua":"image/sig-gargantua.jpg",
-      "Savoyarde":"image/sig-savoyarde.jpg",
-      "Charcuterie":"image/sig-charcuterie.jpg"
+      "Campagnarde":"image/menu/pz23.jpg",
+      "Toscana":"image/menu/pz40.jpg",
+      "Maroilles":"image/menu/pz25.jpg",
+      "Miel Chèvre":"image/menu/pz50.jpg",
+      "Camembert":"image/menu/pz37.jpg",
+      "Kebab":"image/menu/pz47.jpg",
+      "Romaine":"image/menu/pz26.jpg",
+      "Indiana":"image/menu/pz48.jpg",
+      "Del Cugini":"image/sig-del-cugini.jpg",
+      "Charcuterie":"image/sig-charcuterie.jpg",
+      "Savoyarde":"image/sig-savoyarde.jpg"
+    },
+    pates:{
+      "Bolognaise":"image/menu/pa25.jpg",
+      "Carbonara":"image/menu/pa21.jpg",
+      "Toscana":"image/menu/pa2.jpg",
+      "Au four":"image/menu/pa10.jpg",
+      "Cocorico":"image/menu/pa12.jpg",
+      "Saumon":"image/menu/pa13.jpg",
+      "4 Fromages":"image/menu/pa17.jpg"
+    },
+    desserts:{
+      "Tiramisu maison":"image/menu/de18.jpg",
+      "Dame Blanche / Dame Noire":"image/menu/de24.jpg",
+      "Café Liégeois":"image/menu/de19.jpg",
+      "Colonel":"image/menu/de25.jpg",
+      "Glaces Rhum-Raisins":"image/menu/de16.jpg",
+      "Glaces":"image/menu/de14.jpg",
+      "Pizza dessert":"image/menu/de3.jpg",
+      "Pizza Nutella (chausson)":"image/menu/de22.jpg"
     }
   };
   /* icônes de catégorie (vignettes placeholder élégantes, thème italien) */
+  /* icônes Lucide (lucide.dev, MIT) — propres et naturelles */
   var CATICON={
-    pizzas:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c5 0 9 3 10 6L12 21 2 9c1-3 5-6 10-6z"/><circle cx="10" cy="9" r="1"/><circle cx="13.5" cy="12" r="1"/></svg>',
-    pates:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16a8 8 0 0 1-16 0z"/><path d="M7 11V7M10 11V6M13 11V6M16 11V7"/></svg>',
-    salades:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18a9 9 0 0 1-18 0z"/><path d="M12 11c0-4 3-6 6-6M12 11c-1-3-4-4-7-3"/></svg>',
-    desserts:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11a4 4 0 1 1 8 0z"/><path d="M9 11l3 10 3-10"/></svg>',
-    boissons:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l-1.5 16a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1z"/><path d="M7 8h10"/></svg>'
+    pizzas:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14-1 1"/><path d="m13.75 18.25-1.25 1.42"/><path d="M17.775 5.654a15.68 15.68 0 0 0-12.121 12.12"/><path d="M18.8 9.3a1 1 0 0 0 2.1 7.7"/><path d="M21.964 20.732a1 1 0 0 1-1.232 1.232l-18-5a1 1 0 0 1-.695-1.232A19.68 19.68 0 0 1 15.732 2.037a1 1 0 0 1 1.232.695z"/></svg>',
+    pates:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"/><path d="M7 21h10"/><path d="M19.5 12 22 6"/><path d="M16.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.73 1.62"/><path d="M11.25 3c.27.1.8.53.74 1.36-.05.83-.92 1.2-.98 2.02-.06.78.33 1.24.72 1.62"/><path d="M6.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.74 1.62"/></svg>',
+    salades:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21h10"/><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"/><path d="M11.38 12a2.4 2.4 0 0 1-.4-4.77 2.4 2.4 0 0 1 3.2-2.77 2.4 2.4 0 0 1 3.47-.63 2.4 2.4 0 0 1 3.37 3.37 2.4 2.4 0 0 1-1.1 3.7 2.51 2.51 0 0 1 .03 1.1"/><path d="m13 12 4-4"/><path d="M10.9 7.25A3.99 3.99 0 0 0 4 10c0 .73.2 1.41.54 2"/></svg>',
+    desserts:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m7 11 4.08 10.35a1 1 0 0 0 1.84 0L17 11"/><path d="M17 7A5 5 0 0 0 7 7"/><path d="M17 7a2 2 0 0 1 0 4H7a2 2 0 0 1 0-4"/></svg>',
+    boissons:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m6 8 1.75 12.28a2 2 0 0 0 2 1.72h4.54a2 2 0 0 0 2-1.72L18 8"/><path d="M5 8h14"/><path d="M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/><path d="m12 8-1-6h2l-1 6"/></svg>'
   };
   var fmt=function(n){return n.toFixed(2).replace('.',',')+' €';};
+  var ORDER='<a class="order" href="tel:+33361507933" aria-label="Commander par téléphone" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>';
   function itemsHTML(cat){
     var d=DATA[cat];
     noteEl.innerHTML=d.note||''; suppEl.innerHTML=d.supp||''; suppEl.style.display=d.supp?'block':'none';
     var icon=CATICON[cat]||CATICON.pizzas;
+    var compact=(cat==='boissons');
     return d.items.map(function(it){
       var name=it[0],ing=it[1],p1=it[2],p2=it[3],badge=it[4],priceHtml;
       if(p2!=null){priceHtml='<div class="prices"><div class="pp"><small>24 cm</small><b>'+fmt(p1)+'</b></div><div class="pp"><small>29 cm</small><b>'+fmt(p2)+'</b></div></div>';}
       else if(p1!=null){priceHtml='<div class="single">'+fmt(p1)+'</div>';}
-      else{priceHtml='<div class="single" style="font-size:1rem">voir détail ci-dessus</div>';}
+      else{priceHtml='<div class="single" style="font-size:.95rem">voir détail</div>';}
+      if(compact){
+        return '<article class="item compact"><div class="ci" aria-hidden="true">'+icon+'</div><div class="body"><h3>'+name+'</h3>'+(ing?'<p class="ing">'+ing+'</p>':'')+'</div><div class="cprice">'+priceHtml+'</div></article>';
+      }
       var ph=(PHOTOS[cat]||{})[name];
-      var thumb=ph?'<div class="thumb"><img src="'+ph+'" alt="'+name+'" loading="lazy" decoding="async" onerror="dcImgFail(this)"></div>':'<div class="thumb ph-ill" role="img" aria-label="'+name+'">'+icon+'</div>';
-      return '<article class="item has-thumb'+(ph?' has-photo':'')+'">'+thumb+'<div class="top"><h3>'+name+'</h3>'+(badge?'<span class="badge">'+badge+'</span>':'')+'</div><p class="ing">'+(ing||'&nbsp;')+'</p>'+priceHtml+'</article>';
+      var bdg=badge?'<span class="badge">'+badge+'</span>':'';
+      var media=ph
+        ?'<div class="ph"><img src="'+ph+'" alt="'+name+'" loading="lazy" decoding="async" onerror="dcImgFail(this)">'+bdg+'</div>'
+        :'<div class="ph ph-ill" role="img" aria-label="'+name+'">'+icon+bdg+'</div>';
+      return '<article class="item'+(ph?' has-photo':'')+'">'+media+'<div class="body"><h3>'+name+'</h3><p class="ing">'+(ing||'&nbsp;')+'</p><div class="foot">'+priceHtml+ORDER+'</div></div></article>';
     }).join('');
   }
-  function render(cat){ grid.innerHTML=itemsHTML(cat); }
+  function render(cat){ grid.classList.toggle('compact-grid',cat==='boissons'); grid.innerHTML=itemsHTML(cat); }
   function revealItems(){
     var items=grid.querySelectorAll('.item');
     if(hasGSAP && !reduced){ GSAP.fromTo(items,{y:26,opacity:0},{y:0,opacity:1,duration:.5,stagger:.04,ease:'power3.out',overwrite:true}); }
