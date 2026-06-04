@@ -119,10 +119,8 @@
   .btn.ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.55);box-shadow:none}
   .btn.ghost:hover{background:rgba(255,255,255,.12);border-color:#fff}
   .nav-cta{display:flex;gap:11px;align-items:center}
-  .burger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:8px}
-  .burger span{width:26px;height:2.5px;background:#fff;border-radius:2px;transition:.3s}
-  .burger{position:relative;z-index:103}
-  .burger.open span{background:var(--green)}
+  .burger{display:none;cursor:pointer;flex-direction:column;gap:5px;padding:11px 9px;position:relative;z-index:103;background:var(--green);border:none;border-radius:12px;box-shadow:0 8px 18px -6px rgba(0,0,0,.4)}
+  .burger span{width:24px;height:2.5px;background:#fff;border-radius:2px;transition:.3s}
   .burger.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
   .burger.open span:nth-child(2){opacity:0}
   .burger.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
@@ -137,7 +135,7 @@
   header.nav.scrolled nav.links a:hover{color:var(--red)}
   header.nav.scrolled .btn.ghost{color:var(--green);border-color:var(--green)}
   header.nav.scrolled .btn.ghost:hover{background:var(--green);color:#fff}
-  header.nav.scrolled .burger span{background:var(--green)}
+  header.nav.scrolled .burger span{background:#fff}
 
   /* ============ HERO ============ */
   .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;overflow:hidden;color:#fff;padding:120px 0 90px;background:var(--char)}
@@ -358,6 +356,8 @@
     .dots{display:none}
     #top{display:none}
     body{padding-bottom:62px}
+    .nav-cta .primary-cta{display:none}
+    .burger{margin-left:auto}
     .mobile-bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:96;background:var(--green-deep);border-top:1px solid rgba(199,154,69,.4);box-shadow:0 -8px 24px -10px rgba(0,0,0,.45);padding-bottom:env(safe-area-inset-bottom)}
     .tabs{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -18px 16px;padding:2px 18px 8px}
     .tabs::-webkit-scrollbar{display:none}
