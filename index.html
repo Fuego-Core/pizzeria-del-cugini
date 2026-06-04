@@ -5,6 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pizzeria Del Cugini — Pâte fraîche maison à Croix</title>
 <meta name="description" content="Pizzeria Del Cugini à Croix (59) — Pizzas maison à pâte fraîche pétrie chaque jour, pâtes, salades & desserts. Sur place ou à emporter.">
+<meta name="theme-color" content="#1c6e3f">
+<link rel="icon" type="image/png" href="image/avatar.png">
+<link rel="apple-touch-icon" href="image/avatar.png">
+<link rel="preload" as="image" href="image/hero-pizza.jpg">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Pizzeria Del Cugini">
+<meta property="og:title" content="Pizzeria Del Cugini — Pizza maison à Croix (59)">
+<meta property="og:description" content="Pizzas maison à pâte fraîche pétrie chaque jour. Sur place ou à emporter — Croix (59).">
+<meta property="og:image" content="https://fuego-core.github.io/pizzeria-del-cugini/image/hero-pizza.jpg">
+<meta property="og:url" content="https://fuego-core.github.io/pizzeria-del-cugini/">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Restaurant","name":"Pizzeria Del Cugini","servesCuisine":["Pizza","Italienne"],"image":"https://fuego-core.github.io/pizzeria-del-cugini/image/hero-pizza.jpg","url":"https://fuego-core.github.io/pizzeria-del-cugini/","telephone":"+33361507933","priceRange":"€€","address":{"@type":"PostalAddress","streetAddress":"26 Place de la Liberté","postalCode":"59170","addressLocality":"Croix","addressCountry":"FR"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"11:30","closes":"13:45"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"18:30","closes":"21:15"}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -898,11 +911,15 @@ const DATA = {
     GSAP.registerPlugin(ST);
     GSAP.ticker.lagSmoothing(0);
     de.classList.add('snap-on');
+    /* mobile : on coupe les effets pilotés au scroll (scrub) pour un défilement 100% fluide ; les entrées de section restent */
+    var isMobile=matchMedia('(max-width:700px)').matches;
 
-    /* HERO : parallaxe multi-couches au démarrage */
-    GSAP.to('#heroBg',{yPercent:16,scale:1.1,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
-    GSAP.to('.hero-copy',{yPercent:22,opacity:.25,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
-    GSAP.to('.scroll-cue',{opacity:0,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'14% top',scrub:true}});
+    /* HERO : parallaxe multi-couches (desktop) */
+    if(!isMobile){
+      GSAP.to('#heroBg',{yPercent:16,scale:1.1,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+      GSAP.to('.hero-copy',{yPercent:22,opacity:.25,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+      GSAP.to('.scroll-cue',{opacity:0,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'14% top',scrub:true}});
+    }
 
     /* pré-split des titres */
     document.querySelectorAll('h2[data-split]').forEach(function(h){ h._words=splitWords(h); });
@@ -910,7 +927,7 @@ const DATA = {
     /* chaque section "page" : rideau couleur piloté par le scroll (scrub) + entrée forte */
     document.querySelectorAll('section.snap').forEach(function(sec){
       var g=sec.querySelector('.cv-green'), r=sec.querySelector('.cv-red');
-      if(g&&r){
+      if(g&&r && !isMobile){
         /* le rideau se lève au fur et à mesure que la section arrive (vert devant, rouge derrière) */
         GSAP.fromTo(g,{yPercent:0},{yPercent:-100,ease:'none',scrollTrigger:{trigger:sec,start:'top 95%',end:'top 42%',scrub:.5}});
         GSAP.fromTo(r,{yPercent:0},{yPercent:-100,ease:'none',scrollTrigger:{trigger:sec,start:'top 86%',end:'top 26%',scrub:.5}});
