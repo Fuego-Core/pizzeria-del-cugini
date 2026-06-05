@@ -53,6 +53,7 @@ window.SITE_CONFIG = {
 
   /* ---------- TEXTES ---------- */
   textes: {
+    promo:       "",   // bandeau d'annonce en haut du site (vide = masqué). Ex : "Fermeture exceptionnelle le 14/07"
     eyebrow:     "Pâte fraîche · Fait maison · Croix (59)",
     heroLigne1:  "Pizzeria",
     heroLigne2:  "Del Cugini",

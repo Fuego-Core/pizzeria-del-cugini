@@ -1,0 +1,15 @@
+{
+  "name": "Pizzeria Del Cugini",
+  "short_name": "Del Cugini",
+  "description": "Pizza maison à pâte fraîche, pâtes, salades et desserts — Croix (59). Sur place ou à emporter.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7efe0",
+  "theme_color": "#1c6e3f",
+  "lang": "fr",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
