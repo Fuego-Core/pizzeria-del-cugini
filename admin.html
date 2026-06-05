@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Panneau d'édition — Pizzeria Del Cugini</title>
+<style>
+  :root{--g:#1c6e3f;--gd:#0e4a28;--r:#b81e2c;--cream:#f7efe0;--paper:#fff;--ink:#241a12;--soft:#6b5b4b;--line:#e4d9c4;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,'Segoe UI',Arial,sans-serif;color:var(--ink);background:#f3ead9}
+  .app{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,560px);min-height:100vh}
+  @media(max-width:1000px){.app{grid-template-columns:1fr}.preview{display:none}}
+  /* éditeur */
+  .editor{padding:0 0 80px}
+  header.top{position:sticky;top:0;z-index:10;background:var(--gd);color:#fff;padding:14px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 6px 18px -8px rgba(0,0,0,.4)}
+  header.top h1{font-size:1.05rem;margin:0;font-weight:700;letter-spacing:.01em}
+  header.top .sp{flex:1}
+  .btn{border:none;border-radius:9px;padding:10px 16px;font-weight:700;font-size:.9rem;cursor:pointer;background:#fff;color:var(--gd)}
+  .btn.green{background:var(--g);color:#fff}
+  .btn.ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.5)}
+  .btn:active{transform:translateY(1px)}
+  .hint{padding:14px 22px;background:#fff7e6;border-bottom:1px solid var(--line);color:#7a5a12;font-size:.86rem;line-height:1.5}
+  .hint b{color:#5a4209}
+  details.sec{border-bottom:1px solid var(--line);background:#fbf6ec}
+  details.sec>summary{cursor:pointer;padding:15px 22px;font-weight:800;font-size:1rem;color:var(--gd);list-style:none;display:flex;align-items:center;gap:10px;user-select:none}
+  details.sec>summary::-webkit-details-marker{display:none}
+  details.sec>summary::before{content:"▸";color:var(--r);transition:transform .2s}
+  details.sec[open]>summary::before{transform:rotate(90deg)}
+  .body{padding:6px 22px 22px}
+  .row{margin:0 0 13px}
+  .row label{display:block;font-size:.8rem;font-weight:700;color:var(--soft);margin-bottom:4px}
+  .row input[type=text],.row textarea,.row input[type=number]{width:100%;padding:9px 11px;border:1.5px solid var(--line);border-radius:8px;font-size:.92rem;font-family:inherit;background:#fff;color:var(--ink)}
+  .row textarea{min-height:64px;resize:vertical;line-height:1.4}
+  .row input:focus,.row textarea:focus{outline:none;border-color:var(--g)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px}
+  .colorrow{display:flex;align-items:center;gap:11px;margin-bottom:10px}
+  .colorrow input[type=color]{width:46px;height:38px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;padding:2px}
+  .colorrow .lab{flex:1;font-size:.9rem;font-weight:600}
+  .colorrow input[type=text]{width:108px;font-family:monospace;font-size:.85rem;padding:7px 8px;border:1.5px solid var(--line);border-radius:8px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;position:relative}
+  .card .rm{position:absolute;top:8px;right:8px;background:#fbe7e7;color:var(--r);border:none;border-radius:7px;width:28px;height:28px;cursor:pointer;font-weight:800;font-size:1rem;line-height:1}
+  .card .rm:hover{background:var(--r);color:#fff}
+  .catbtns{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+  .catbtns button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 15px;font-weight:700;font-size:.85rem;cursor:pointer;color:var(--soft)}
+  .catbtns button.on{background:var(--g);color:#fff;border-color:var(--g)}
+  .add{background:#eaf3ec;color:var(--gd);border:1.5px dashed var(--g);border-radius:10px;padding:11px;width:100%;font-weight:700;cursor:pointer;font-size:.9rem}
+  .add:hover{background:#dcebdf}
+  .small{font-size:.78rem;color:var(--soft);margin:-4px 0 10px}
+  .day{display:grid;grid-template-columns:120px 1fr auto;gap:9px;align-items:center;margin-bottom:8px}
+  .day .ferme{display:flex;align-items:center;gap:5px;font-size:.78rem;font-weight:700;color:var(--r);white-space:nowrap}
+  /* aperçu */
+  .preview{position:sticky;top:0;height:100vh;background:#222;display:flex;flex-direction:column}
+  .preview .pbar{background:#111;color:#fff;padding:9px 14px;font-size:.82rem;display:flex;align-items:center;gap:10px}
+  .preview .pbar button{margin-left:auto;background:var(--g);color:#fff;border:none;border-radius:7px;padding:7px 13px;font-weight:700;cursor:pointer;font-size:.82rem}
+  .preview iframe{flex:1;width:100%;border:0;background:#fff}
+  .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--gd);color:#fff;padding:12px 22px;border-radius:10px;font-weight:700;box-shadow:0 10px 30px -8px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .3s;z-index:99}
+  .toast.show{opacity:1}
+  code{background:#efe6d4;padding:1px 6px;border-radius:5px;font-size:.85em}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="editor">
+    <header class="top">
+      <h1>🍕 Édition du site</h1>
+      <span class="sp"></span>
+      <button class="btn ghost" onclick="reloadValues()">↺ Annuler mes changements</button>
+      <button class="btn" onclick="copyConfig()">📋 Copier</button>
+      <button class="btn green" onclick="downloadConfig()">⬇ Exporter config.js</button>
+    </header>
+    <div class="hint">
+      Modifie ce que tu veux ci-dessous. À droite, <b>« Prévisualiser »</b> montre le résultat en direct.
+      Quand c'est bon, clique <b>« Exporter config.js »</b> : ça télécharge un fichier <code>config.js</code>
+      que tu remplaces sur GitHub (à la racine du dépôt) pour publier les changements.
+    </div>
+    <div id="sections"></div>
+  </div>
+
+  <div class="preview">
+    <div class="pbar">Aperçu en direct <button onclick="refreshPreview()">🔄 Prévisualiser</button></div>
+    <iframe id="frame" title="Aperçu"></iframe>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<!-- on charge la config existante -->
+<script src="config.js"></script>
+<script>
+"use strict";
+/* ===== données de travail ===== */
+var DEF = (window.SITE_CONFIG ? JSON.parse(JSON.stringify(window.SITE_CONFIG)) : {});
+var W = JSON.parse(JSON.stringify(DEF));
+
+var COLOR_LABELS = {
+  "green":"Vert principal","green-deep":"Vert foncé","green-soft":"Vert clair",
+  "red":"Rouge","red-deep":"Rouge foncé","cream":"Crème (fond)","cream-2":"Crème soutenu",
+  "paper":"Fond des cartes","ink":"Texte principal","ink-soft":"Texte secondaire",
+  "gold":"Or","gold-soft":"Or clair"
+};
+var TEXT_LABELS = {
+  eyebrow:"Petit bandeau (au-dessus du titre)",heroLigne1:"Titre — ligne 1",heroLigne2:"Titre — ligne 2",
+  heroLead:"Accroche (italique)",heroSub:"Paragraphe d'intro",heroBouton:"Bouton du hero",
+  navTrouver:"Bouton nav — gauche",navContact:"Bouton nav — droite (appel)",
+  aboutKick:"La maison — petit titre",aboutTitre:"La maison — titre",aboutTexte:"La maison — paragraphe",
+  specialitesKick:"Spécialités — petit titre",specialitesTitre:"Spécialités — titre",specialitesSousTitre:"Spécialités — sous-titre",
+  carteKick:"Carte — petit titre",carteTitre:"Carte — titre",carteSousTitre:"Carte — sous-titre",
+  infosKick:"Infos — petit titre",infosTitre:"Infos — titre",infosSousTitre:"Infos — sous-titre",
+  footerTexte:"Footer — texte de présentation",footerBas1:"Footer — bas (gauche)",footerBas2:"Footer — bas (droite)"
+};
+var INFO_LABELS = {
+  nom:"Nom de l'établissement",telephone:"Téléphone (liens d'appel, sans espaces)",telephoneAffiche:"Téléphone affiché",
+  adresseLigne1:"Adresse — ligne 1",adresseLigne2:"Adresse — ligne 2",adresseComplete:"Adresse complète (Google Maps)",
+  services:"Services",facebook:"Lien Facebook",instagram:"Lien Instagram",horairesResume:"Horaires (résumé footer)"
+};
+var CATS = [["pizzas","Pizzas"],["pates","Pâtes"],["salades","Salades"],["desserts","Desserts"],["boissons","Boissons"]];
+var FEATURE_LABELS = ["Atout 1","Atout 2","Atout 3","Atout 4"];
+
+/* ===== helpers DOM ===== */
+function el(tag, cls, html){ var e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; }
+function rowInput(labelTxt, value, oninput, multiline){
+  var r=el('div','row');
+  r.appendChild(el('label',null,labelTxt));
+  var i = multiline ? el('textarea') : el('input');
+  if(!multiline) i.type='text';
+  i.value=(value==null?'':value);
+  i.addEventListener('input',function(){ oninput(i.value); });
+  r.appendChild(i);
+  return r;
+}
+function numInput(value, oninput, ph){
+  var i=el('input'); i.type='number'; i.step='0.50'; i.placeholder=ph||''; i.style.width='100%';
+  i.value=(value==null?'':value);
+  i.addEventListener('input',function(){ oninput(i.value); });
+  return i;
+}
+
+/* ===== sections ===== */
+function build(){
+  var root=document.getElementById('sections'); root.innerHTML='';
+
+  /* --- Couleurs --- */
+  root.appendChild(section('🎨 Couleurs', function(b){
+    Object.keys(W.couleurs||{}).forEach(function(k){
+      var rr=el('div','colorrow');
+      var c=el('input'); c.type='color'; c.value=toHex(W.couleurs[k]);
+      var t=el('input'); t.type='text'; t.value=W.couleurs[k];
+      c.addEventListener('input',function(){ W.couleurs[k]=c.value; t.value=c.value; });
+      t.addEventListener('input',function(){ W.couleurs[k]=t.value; if(/^#([0-9a-f]{6}|[0-9a-f]{3})$/i.test(t.value))c.value=t.value; });
+      rr.appendChild(c); rr.appendChild(el('span','lab',COLOR_LABELS[k]||k)); rr.appendChild(t);
+      b.appendChild(rr);
+    });
+  }, true));
+
+  /* --- Infos pratiques --- */
+  root.appendChild(section('📍 Infos pratiques', function(b){
+    Object.keys(INFO_LABELS).forEach(function(k){
+      if(W.infos[k]===undefined) return;
+      b.appendChild(rowInput(INFO_LABELS[k], W.infos[k], function(v){ W.infos[k]=v; }));
+    });
+  }));
+
+  /* --- Horaires --- */
+  root.appendChild(section('🕒 Horaires', function(b){
+    b.appendChild(el('div','small','Décoche « Fermé » pour saisir des horaires. Le résumé du footer se règle dans « Infos pratiques ».'));
+    (W.infos.horaires||[]).forEach(function(h,idx){
+      var d=el('div','day');
+      var j=el('input'); j.type='text'; j.value=h.jour; j.addEventListener('input',function(){h.jour=j.value;});
+      var v=el('input'); v.type='text'; v.value=h.valeur; v.addEventListener('input',function(){h.valeur=v.value;});
+      var wrap=el('label','ferme');
+      var cb=el('input'); cb.type='checkbox'; cb.checked=!!h.ferme;
+      cb.addEventListener('change',function(){ h.ferme=cb.checked; if(cb.checked){h.valeur='Fermé'; v.value='Fermé';} });
+      wrap.appendChild(cb); wrap.appendChild(document.createTextNode('Fermé'));
+      d.appendChild(j); d.appendChild(v); d.appendChild(wrap);
+      b.appendChild(d);
+    });
+  }));
+
+  /* --- Textes --- */
+  root.appendChild(section('✍️ Textes', function(b){
+    Object.keys(TEXT_LABELS).forEach(function(k){
+      if(W.textes[k]===undefined) return;
+      var ml = /Texte|Sous|Para|Lead|Sub/i.test(TEXT_LABELS[k]) || (W.textes[k]&&W.textes[k].length>60);
+      b.appendChild(rowInput(TEXT_LABELS[k], W.textes[k], function(v){ W.textes[k]=v; }, ml));
+    });
+    b.appendChild(el('div','small','— Les 4 atouts de la section « La maison » —'));
+    (W.textes.features||[]).forEach(function(f,i){
+      var c=el('div','card');
+      c.appendChild(el('div','small','<b>'+FEATURE_LABELS[i]+'</b>'));
+      c.appendChild(rowInput('Titre', f.titre, function(v){f.titre=v;}));
+      c.appendChild(rowInput('Texte', f.texte, function(v){f.texte=v;}, true));
+      b.appendChild(c);
+    });
+  }));
+
+  /* --- Images & Spécialités --- */
+  root.appendChild(section('🖼️ Images & spécialités', function(b){
+    b.appendChild(el('div','small','Indique le nom du fichier (placé dans le dossier <code>image/</code>). Ex : <code>image/ma-photo.jpg</code>.'));
+    b.appendChild(rowInput('Photo du hero (grand fond)', W.images.hero, function(v){W.images.hero=v;}));
+    b.appendChild(rowInput('Photo « La maison »', W.images.about, function(v){W.images.about=v;}));
+    b.appendChild(el('div','small','— Les 4 pizzas « Spécialités » —'));
+    (W.images.signatures||[]).forEach(function(s,i){
+      var c=el('div','card');
+      c.appendChild(rowInput('Nom', s.nom, function(v){s.nom=v;}));
+      c.appendChild(rowInput('Description', s.desc, function(v){s.desc=v;}, true));
+      var g=el('div','grid2');
+      g.appendChild(rowInput('Prix affiché', s.prix, function(v){s.prix=v;}));
+      g.appendChild(rowInput('Badge (ex : Signature)', s.tag, function(v){s.tag=v;}));
+      c.appendChild(g);
+      c.appendChild(rowInput('Fichier image', s.fichier, function(v){s.fichier=v;}));
+      b.appendChild(c);
+    });
+  }));
+
+  /* --- Menu --- */
+  root.appendChild(menuSection());
+}
+
+function section(title, fill, open){
+  var d=el('details','sec'); if(open)d.open=true;
+  d.appendChild(el('summary',null,title));
+  var b=el('div','body'); fill(b); d.appendChild(b);
+  return d;
+}
+
+/* ----- Menu (catégories + plats) ----- */
+var curCat='pizzas';
+function menuSection(){
+  var d=el('details','sec');
+  d.appendChild(el('summary',null,'🍽️ Menu & prix'));
+  var b=el('div','body'); b.id='menuBody';
+  var bar=el('div','catbtns');
+  CATS.forEach(function(c){
+    var btn=el('button',c[0]===curCat?'on':'',c[1]);
+    btn.addEventListener('click',function(){ curCat=c[0]; renderMenu(); document.querySelectorAll('.catbtns button').forEach(function(x){x.classList.remove('on');}); btn.classList.add('on'); });
+    bar.appendChild(btn);
+  });
+  b.appendChild(bar);
+  b.appendChild(el('div',null,'<div id="menuList"></div>'));
+  d.appendChild(b);
+  setTimeout(renderMenu,0);
+  return d;
+}
+function renderMenu(){
+  var host=document.getElementById('menuList'); if(!host)return; host.innerHTML='';
+  var cat=curCat, isPizza=(cat==='pizzas');
+  var data=W.menu[cat]; if(!data){host.innerHTML='—';return;}
+  /* note + supplément de catégorie */
+  host.appendChild(rowInput('Texte d\'intro de la catégorie (HTML)', data.note, function(v){data.note=v;}, true));
+  host.appendChild(rowInput('Mention supplément (HTML, vide si aucune)', data.supp, function(v){data.supp=v;}));
+  host.appendChild(el('div','small','— Plats —'));
+  data.items.forEach(function(it,idx){
+    var c=el('div','card');
+    var rm=el('button','rm','×'); rm.title='Supprimer ce plat';
+    rm.addEventListener('click',function(){ var nom=it[0]; data.items.splice(idx,1); if(W.photosMenu[cat])delete W.photosMenu[cat][nom]; renderMenu(); });
+    c.appendChild(rm);
+    c.appendChild(rowInput('Nom', it[0], function(v){ renameItem(cat,it,v); it[0]=v; }));
+    c.appendChild(rowInput('Ingrédients', it[1], function(v){ it[1]=v; }));
+    /* prix */
+    var pr=el('div', isPizza?'grid2':'row');
+    if(isPizza){
+      var w1=el('div','row'); w1.appendChild(el('label',null,'Prix 24 cm (€)')); w1.appendChild(numInput(it[2],function(v){ it[2]=parsePrice(v); }));
+      var w2=el('div','row'); w2.appendChild(el('label',null,'Prix 29 cm (€)')); w2.appendChild(numInput(it[3],function(v){ it[3]=parsePrice(v); }));
+      pr.appendChild(w1); pr.appendChild(w2);
+    }else{
+      pr.appendChild(el('label',null,'Prix (€) — laisser vide = « voir détail »'));
+      pr.appendChild(numInput(it[2],function(v){ it[2]=parsePrice(v); }));
+    }
+    c.appendChild(pr);
+    if(isPizza) c.appendChild(rowInput('Badge (optionnel : Maison, Signature…)', it[4], function(v){ if(v)it[4]=v; else it.length=4; }));
+    /* photo */
+    var ph=(W.photosMenu[cat]&&W.photosMenu[cat][it[0]])||'';
+    c.appendChild(rowInput('Photo (ex : image/menu/ma-pizza.jpg — vide = placeholder)', ph, function(v){ setPhoto(cat,it[0],v); }));
+    host.appendChild(c);
+  });
+  var add=el('button','add','+ Ajouter un plat');
+  add.addEventListener('click',function(){ data.items.push(isPizza?['Nouveau plat','ingrédients',0,0]:['Nouveau plat','ingrédients',0]); renderMenu(); });
+  host.appendChild(add);
+}
+function renameItem(cat,it,newName){
+  var old=it[0]; if(old===newName)return;
+  if(W.photosMenu[cat]&&W.photosMenu[cat][old]!=null){ W.photosMenu[cat][newName]=W.photosMenu[cat][old]; delete W.photosMenu[cat][old]; }
+}
+function parsePrice(v){ v=(''+v).trim().replace(',','.'); if(v==='')return null; var n=parseFloat(v); return isNaN(n)?null:n; }
+function setPhoto(cat,nom,v){
+  if(!W.photosMenu[cat])W.photosMenu[cat]={};
+  if(v) W.photosMenu[cat][nom]=v; else delete W.photosMenu[cat][nom];
+}
+
+/* ===== couleurs : normaliser en #rrggbb pour input color ===== */
+function toHex(v){ if(!v)return '#000000'; v=(''+v).trim(); if(/^#[0-9a-f]{3}$/i.test(v)){return '#'+v[1]+v[1]+v[2]+v[2]+v[3]+v[3];} if(/^#[0-9a-f]{6}$/i.test(v))return v; return '#000000'; }
+
+/* ===== export ===== */
+function buildJS(){
+  return "/* ============================================================\n"
+       + "   CONFIGURATION DU SITE — Pizzeria Del Cugini\n"
+       + "   Généré par admin.html — remplace ce fichier sur GitHub pour publier.\n"
+       + "   ============================================================ */\n"
+       + "window.SITE_CONFIG = " + JSON.stringify(W, null, 2) + ";\n";
+}
+function downloadConfig(){
+  var blob=new Blob([buildJS()],{type:'text/javascript;charset=utf-8'});
+  var a=el('a'); a.href=URL.createObjectURL(blob); a.download='config.js'; document.body.appendChild(a); a.click(); a.remove();
+  toast('config.js téléchargé — remplace-le sur GitHub');
+}
+function copyConfig(){
+  var txt=buildJS();
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(function(){toast('Copié dans le presse-papier');},function(){fallbackCopy(txt);}); }
+  else fallbackCopy(txt);
+}
+function fallbackCopy(txt){ var t=el('textarea'); t.value=txt; document.body.appendChild(t); t.select(); try{document.execCommand('copy');toast('Copié');}catch(e){toast('Copie impossible');} t.remove(); }
+function reloadValues(){ W=JSON.parse(JSON.stringify(DEF)); build(); toast('Valeurs réinitialisées'); }
+
+/* ===== aperçu live ===== */
+function refreshPreview(){
+  try{ localStorage.setItem('dc_preview_config', JSON.stringify(W)); }catch(e){}
+  var f=document.getElementById('frame');
+  f.src='index.html?preview&t='+Date.now();
+  toast('Aperçu mis à jour');
+}
+
+/* ===== toast ===== */
+var toTimer; function toast(m){ var t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(toTimer); toTimer=setTimeout(function(){t.classList.remove('show');},2200); }
+
+/* ===== init ===== */
+if(!window.SITE_CONFIG){
+  document.getElementById('sections').innerHTML='<div class="hint" style="background:#fbe7e7;color:#88121d"><b>config.js introuvable.</b> Ouvre ce panneau depuis le même dossier que <code>config.js</code> et <code>index.html</code>.</div>';
+}else{
+  build();
+  try{ localStorage.setItem('dc_preview_config', JSON.stringify(W)); }catch(e){}
+  document.getElementById('frame').src='index.html?preview&t='+Date.now();
+}
+</script>
+</body>
+</html>

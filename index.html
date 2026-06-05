@@ -423,6 +423,15 @@
     .hero-bg{transform:none!important}
   }
 </style>
+<script src="config.js"></script>
+<script>
+/* aperçu live depuis admin.html (?preview) — sans effet sur le site normal */
+(function(){try{if(/[?&]preview/.test(location.search)){var p=localStorage.getItem('dc_preview_config');if(p)window.SITE_CONFIG=JSON.parse(p);}}catch(e){}})();
+</script>
+<script>
+/* applique les couleurs du config immédiatement (évite tout flash) */
+(function(){try{var C=window.SITE_CONFIG;if(C&&C.couleurs){var de=document.documentElement;for(var k in C.couleurs){if(C.couleurs[k])de.style.setProperty('--'+k,C.couleurs[k]);}}}catch(e){}})();
+</script>
 <script>
 /* === Contrôleur d'intro (tout début, indépendant des libs) === */
 (function(){
@@ -496,10 +505,10 @@
       <a href="#infos">Infos &amp; accès</a>
     </nav>
     <div class="nav-cta">
-      <a href="#infos" class="btn ghost">Nous trouver</a>
+      <a href="#infos" class="btn ghost" data-cfg="textes.navTrouver">Nous trouver</a>
       <a href="tel:+33361507933" class="btn primary-cta">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        Nous contacter
+        <span data-cfg="textes.navContact">Nous contacter</span>
       </a>
       <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
@@ -512,12 +521,12 @@
   <div class="hero-overlay"></div>
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <span class="eyebrow"><span class="dot"></span> Pâte fraîche · Fait maison · Croix (59)</span>
-      <h1><span class="l1">Pizzeria</span><span class="l2">Del Cugini</span></h1>
-      <p class="lead">La vraie pizza maison, pâte fraîche pétrie chaque jour.</p>
-      <p class="sub">Plus de 30 pizzas, des pâtes, des salades de saison et des desserts gourmands. Une cuisine généreuse, des produits frais, l'esprit de famille dans chaque part.</p>
+      <span class="eyebrow"><span class="dot"></span> <span data-cfg="textes.eyebrow">Pâte fraîche · Fait maison · Croix (59)</span></span>
+      <h1><span class="l1" data-cfg="textes.heroLigne1">Pizzeria</span><span class="l2" data-cfg="textes.heroLigne2">Del Cugini</span></h1>
+      <p class="lead" data-cfg="textes.heroLead">La vraie pizza maison, pâte fraîche pétrie chaque jour.</p>
+      <p class="sub" data-cfg="textes.heroSub">Plus de 30 pizzas, des pâtes, des salades de saison et des desserts gourmands. Une cuisine généreuse, des produits frais, l'esprit de famille dans chaque part.</p>
       <div class="hero-cta">
-        <a href="#menu" class="btn">Voir la carte</a>
+        <a href="#menu" class="btn" data-cfg="textes.heroBouton">Voir la carte</a>
       </div>
       <div class="hero-stats">
         <div class="stat"><b><span class="num" data-to="30">30</span><em>+</em></b><span>pizzas maison</span></div>
@@ -647,15 +656,15 @@
       <div class="contact-card">
         <a class="crow" href="https://www.google.com/maps/search/?api=1&amp;query=26+Place+de+la+Libert%C3%A9%2C+59170+Croix%2C+France" target="_blank" rel="noopener">
           <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-          <div><h4>Adresse</h4><p>26 Place de la Liberté<br>59170 Croix, France</p></div>
+          <div><h4>Adresse</h4><p id="cfgInfosAddr">26 Place de la Liberté<br>59170 Croix, France</p></div>
         </a>
         <a class="crow" href="tel:+33361507933">
           <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-          <div><h4>Téléphone</h4><p>+33 3 61 50 79 33</p></div>
+          <div><h4>Téléphone</h4><p id="cfgInfosTel">+33 3 61 50 79 33</p></div>
         </a>
         <div class="crow">
           <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h13l3 4h2M5 16h.01M15 16h.01"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/><path d="M3 12V8a1 1 0 0 1 1-1h9v9"/></svg></div>
-          <div><h4>Services</h4><p>Sur place · À emporter</p></div>
+          <div><h4>Services</h4><p id="cfgInfosServices">Sur place · À emporter</p></div>
         </div>
       </div>
     </div>
@@ -674,7 +683,7 @@
           <span class="fb-logo" role="img" aria-label="Mascotte Del Cugini"></span>
           <div class="bn">Pizzeria <span class="r">Del Cugini</span></div>
         </div>
-        <p>La vraie pizza maison à pâte fraîche, faite avec générosité et esprit de famille, à Croix (59).</p>
+        <p data-cfg="textes.footerTexte">La vraie pizza maison à pâte fraîche, faite avec générosité et esprit de famille, à Croix (59).</p>
         <div class="socials">
           <a href="https://www.facebook.com/p/Del-Cugini-100063675934988/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0022 12z"/></svg></a>
           <a href="https://www.google.com/maps/search/?api=1&amp;query=26+Place+de+la+Libert%C3%A9%2C+59170+Croix%2C+France" target="_blank" rel="noopener" aria-label="Localisation"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg></a>
@@ -690,15 +699,15 @@
       </div>
       <div class="foot-col">
         <h5>Contact</h5>
-        <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>26 Place de la Liberté, 59170 Croix</p>
-        <a href="tel:+33361507933"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>+33 3 61 50 79 33</a>
-        <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>Mar–Sam : 11h30–13h45 · 18h30–21h15</p>
+        <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg><span id="cfgFootAddr">26 Place de la Liberté, 59170 Croix</span></p>
+        <a href="tel:+33361507933"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span id="cfgFootTel">+33 3 61 50 79 33</span></a>
+        <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg><span id="cfgFootHours">Mar–Sam : 11h30–13h45 · 18h30–21h15</span></p>
         <a href="tel:+33361507933"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Commander / Réserver</a>
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© <span id="yr"></span> Pizzeria Del Cugini — Tous droits réservés.</span>
-      <span>Pâte fraîche maison · Fait avec passion</span>
+      <span>© <span id="yr"></span> <span data-cfg="infos.nom">Pizzeria Del Cugini</span> — <span data-cfg="textes.footerBas1">Tous droits réservés.</span></span>
+      <span data-cfg="textes.footerBas2">Pâte fraîche maison · Fait avec passion</span>
     </div>
   </div>
 </footer>
@@ -715,8 +724,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
 <script>
-/* ===== MENU DATA (extrait de la carte) ===== */
-const DATA = {
+/* ===== MENU : à éditer dans config.js. L'objet ci-dessous sert seulement de repli si config.js ne se charge pas. ===== */
+var DATA = (window.SITE_CONFIG && SITE_CONFIG.menu) ? SITE_CONFIG.menu : {
   pizzas:{
     note:'<b>Prix : Petite enfant 24 cm / Standard 29 cm.</b><div class="price-key"><span><i>24 cm</i> = petite</span><span><i>29 cm</i> = standard</span></div>',
     items:[
@@ -830,6 +839,48 @@ const DATA = {
   var started=false;
   var de=document.documentElement;
 
+  /* ---------- APPLICATION DU CONFIG (textes, images, infos) ---------- */
+  function cfgGet(o,path){var p=path.split('.'),x=o;for(var i=0;i<p.length&&x!=null;i++){x=x[p[i]];}return x;}
+  function cfgTxt(sel,v){var el=document.querySelector(sel);if(el&&v!=null)el.textContent=v;}
+  function cfgHtml(sel,v){var el=document.querySelector(sel);if(el&&v!=null)el.innerHTML=v;}
+  function cfgET(el,v){if(el&&v!=null)el.textContent=v;}
+  function cfgSecHead(id,k,t,s){cfgTxt('#'+id+' .sec-head .kick',k);cfgTxt('#'+id+' .sec-head h2',t);cfgTxt('#'+id+' .sec-head p',s);}
+  function applyContent(){
+    var C=window.SITE_CONFIG; if(!C) return;
+    var T=C.textes||{}, I=C.infos||{}, IM=C.images||{};
+    try{
+      document.querySelectorAll('[data-cfg]').forEach(function(el){var v=cfgGet(C,el.getAttribute('data-cfg'));if(v!=null)el.innerHTML=v;});
+      /* À propos */
+      cfgTxt('#about .about-copy .kick',T.aboutKick);
+      cfgTxt('#about .about-copy h2',T.aboutTitre);
+      cfgTxt('#about .about-copy > p',T.aboutTexte);
+      if(T.features){var fe=document.querySelectorAll('#about .feat');T.features.forEach(function(f,i){var el=fe[i];if(!el)return;cfgET(el.querySelector('h4'),f.titre);cfgET(el.querySelector('p'),f.texte);});}
+      /* En-têtes de section */
+      cfgSecHead('signature',T.specialitesKick,T.specialitesTitre,T.specialitesSousTitre);
+      cfgSecHead('menu',T.carteKick,T.carteTitre,T.carteSousTitre);
+      cfgSecHead('infos',T.infosKick,T.infosTitre,T.infosSousTitre);
+      /* Images */
+      var hb=document.getElementById('heroBg'); if(hb&&IM.hero)hb.style.backgroundImage="url('"+IM.hero+"')";
+      var ap=document.querySelector('.about-photo img'); if(ap&&IM.about)ap.src=IM.about;
+      if(IM.signatures){var sg=document.querySelectorAll('.sig');IM.signatures.forEach(function(s,i){var el=sg[i];if(!el)return;var im=el.querySelector('img');if(im&&s.fichier){im.src=s.fichier;if(s.nom)im.alt=s.nom;}cfgET(el.querySelector('h3'),s.nom);cfgET(el.querySelector('.body p'),s.desc);cfgET(el.querySelector('.price'),s.prix);var tg=el.querySelector('.tag');if(s.tag){if(tg)tg.textContent=s.tag;else{var ph=el.querySelector('.ph');if(ph){var nt=document.createElement('span');nt.className='tag';nt.textContent=s.tag;ph.insertBefore(nt,ph.firstChild);}}}else if(tg){tg.parentNode.removeChild(tg);}});}
+      /* Infos affichées */
+      cfgHtml('#cfgInfosAddr',(I.adresseLigne1||'')+'<br>'+(I.adresseLigne2||''));
+      cfgTxt('#cfgInfosTel',I.telephoneAffiche);
+      cfgTxt('#cfgInfosServices',I.services);
+      cfgTxt('#cfgFootTel',I.telephoneAffiche);
+      cfgTxt('#cfgFootHours',I.horairesResume);
+      cfgTxt('#cfgFootAddr',(I.adresseLigne1||'')+', '+(I.adresseLigne2||'').replace(/,?\s*France\s*$/i,''));
+      /* Horaires (liste) */
+      var ul=document.querySelector('.hours ul');
+      if(ul&&I.horaires&&I.horaires.length){ul.innerHTML=I.horaires.map(function(h){return '<li><span>'+h.jour+'</span><span class="'+(h.ferme?'closed':'open')+'">'+h.valeur+'</span></li>';}).join('');}
+      /* Liens dynamiques (tel, maps, facebook, iframe) */
+      if(I.telephone){var tl='tel:'+I.telephone;document.querySelectorAll('a[href^="tel:"]').forEach(function(a){a.href=tl;});}
+      if(I.adresseComplete){var q=encodeURIComponent(I.adresseComplete);var mp='https://www.google.com/maps/search/?api=1&query='+q;document.querySelectorAll('a[href*="google.com/maps"]').forEach(function(a){a.href=mp;});document.querySelectorAll('iframe[src*="google.com/maps"]').forEach(function(f){f.src='https://www.google.com/maps?q='+q+'&output=embed';});}
+      if(I.facebook){document.querySelectorAll('a[href*="facebook.com"]').forEach(function(a){a.href=I.facebook;});}
+    }catch(e){if(window.console&&console.warn)console.warn('applyContent:',e);}
+  }
+  applyContent();
+
   /* ---------- MENU ---------- */
   var grid=document.getElementById('menuGrid');
   var noteEl=document.getElementById('menuNote');
@@ -839,7 +890,7 @@ const DATA = {
      Structure : PHOTOS[categorie][nom EXACT dans DATA] = fichier image (dans image/).
      Ex : PHOTOS.pizzas['Margherita']='image/margherita.jpg'.
      Sans photo, la fiche affiche un placeholder élégant (icône de catégorie). */
-  var PHOTOS = {
+  var PHOTOS = (window.SITE_CONFIG && SITE_CONFIG.photosMenu) ? SITE_CONFIG.photosMenu : {
     pizzas:{
       "Margherita":"image/menu/pz9.jpg",
       "Jambon":"image/menu/pz3.jpg",
