@@ -58,7 +58,7 @@ window.SITE_CONFIG = {
     note:     "4,8",         // note sur 5
     nombre:   "162",         // nombre d'avis
     texte:    "Merci à nos clients pour leur confiance.",
-    lien:     "https://www.google.com/maps/search/?api=1&query=Pizzeria+Del+Cugini+26+Place+de+la+Libert%C3%A9+59170+Croix"  // votre fiche Google (avis)
+    lien:     "https://www.google.com/maps?cid=9187670842065891846"  // votre fiche Google (avis)
   },
 
   /* ---------- TEXTES ---------- */
