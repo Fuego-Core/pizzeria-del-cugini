@@ -216,6 +216,14 @@ function numInput(value, oninput, ph){
   i.addEventListener('input',function(){ oninput(i.value); });
   return i;
 }
+function checkRow(labelTxt, checked, onchange){
+  var r=el('div','row');
+  var w=el('label'); w.style.cssText='display:flex;align-items:center;gap:9px;font-size:.92rem;font-weight:600;color:var(--soft);cursor:pointer';
+  var cb=el('input'); cb.type='checkbox'; cb.checked=!!checked; cb.style.cssText='width:17px;height:17px;accent-color:var(--green)';
+  cb.addEventListener('change',function(){ onchange(cb.checked); });
+  w.appendChild(cb); w.appendChild(document.createTextNode(labelTxt));
+  r.appendChild(w); return r;
+}
 
 /* ===== sections ===== */
 function build(){
@@ -254,6 +262,19 @@ function build(){
       d.appendChild(j); d.appendChild(v); d.appendChild(wrap);
       b.appendChild(d);
     });
+  }));
+
+  root.appendChild(section('Avis Google', function(b){
+    W.avis = W.avis || {};
+    b.appendChild(el('div','note','Note affichée dans la section « Avis » du site. Mets-la à jour quand elle change sur Google.'));
+    b.appendChild(checkRow('Afficher la section avis', W.avis.afficher!==false, function(v){W.avis.afficher=v;}));
+    b.appendChild(rowInput('Titre', W.avis.titre, function(v){W.avis.titre=v;}));
+    var g=el('div','grid2');
+    g.appendChild(rowInput('Note (sur 5)', W.avis.note, function(v){W.avis.note=v;}));
+    g.appendChild(rowInput("Nombre d'avis", W.avis.nombre, function(v){W.avis.nombre=v;}));
+    b.appendChild(g);
+    b.appendChild(rowInput('Phrase', W.avis.texte, function(v){W.avis.texte=v;}));
+    b.appendChild(rowInput('Lien vers vos avis Google', W.avis.lien, function(v){W.avis.lien=v;}));
   }));
 
   root.appendChild(section('Textes', function(b){

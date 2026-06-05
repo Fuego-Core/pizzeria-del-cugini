@@ -51,6 +51,16 @@ window.SITE_CONFIG = {
     horairesResume: "Mar–Sam : 11h30–13h45 · 18h30–21h15"  // ligne courte du footer
   },
 
+  /* ---------- AVIS GOOGLE ---------- */
+  avis: {
+    afficher: true,          // false pour masquer la section
+    titre:    "Ils nous ont noté",
+    note:     "4,8",         // note sur 5
+    nombre:   "162",         // nombre d'avis
+    texte:    "Merci à nos clients pour leur confiance.",
+    lien:     "https://www.google.com/maps/search/?api=1&query=Pizzeria+Del+Cugini+26+Place+de+la+Libert%C3%A9+59170+Croix"  // votre fiche Google (avis)
+  },
+
   /* ---------- TEXTES ---------- */
   textes: {
     promo:       "",   // bandeau d'annonce en haut du site (vide = masqué). Ex : "Fermeture exceptionnelle le 14/07"
